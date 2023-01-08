@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 
 # Create your views here.
 
@@ -51,7 +51,7 @@ def products(request):
     form = ProductCustomForm()
     context["form"] = form
 
-    products = Product.objects.filter(price=12)
+    products = Product.objects.all()
     context["products"] = products
 
     if request.method == "POST":
@@ -60,6 +60,7 @@ def products(request):
         if form_data.is_valid():
             print("validated")
             
+
             # approach 1
             Product.objects.create(**form_data.cleaned_data)
             
@@ -71,3 +72,12 @@ def products(request):
         return redirect('product')
 
     return render(request, template_path, context)
+
+
+def delete_product(request, id):
+    current_product = Product.objects.filter(id=id).exists()
+    if current_product:
+        Product.objects.get(id=id).delete()
+        return redirect('product')
+    else:
+        return HttpResponse("no such product")

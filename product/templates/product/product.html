@@ -48,7 +48,10 @@
     <div class="list">
         <ul>
             {% for item in products %}
-            <li>{{item.name}}</li>
+            <li>
+                <span>{{item.name}}</span>    
+                <span><a href="products/delete/{{item.id}}">Delete</a></span>
+            </li>
             {% endfor %}
         </ul>
     </div>
