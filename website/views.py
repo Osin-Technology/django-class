@@ -6,6 +6,11 @@ from product.models import (
     Product,
 )
 
+from product.forms import (
+    ProductForm,
+    ProductCustomForm
+)
+
 
 def home(request):
     template_path = 'website/index.html'
@@ -43,11 +48,26 @@ def products(request):
     template_path = 'product/product.html'
     context = {}
 
+    form = ProductCustomForm()
+    context["form"] = form
+
     products = Product.objects.filter(price=12)
     context["products"] = products
 
     if request.method == "POST":
-        create_products(request.POST)
+        # create_products(request.POST)
+        form_data = ProductCustomForm(request.POST)
+        if form_data.is_valid():
+            print("validated")
+            
+            # approach 1
+            Product.objects.create(**form_data.cleaned_data)
+            
+            # approach 2 for model forms
+            # form_data.save()
+        else:
+            print("not validated")
+
         return redirect('product')
 
     return render(request, template_path, context)

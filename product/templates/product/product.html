@@ -15,14 +15,10 @@
 {% endblock %}
 
 {% block body %}
-
 <div style="display:flex;">
     <div style="margin-right:6rem;">
-
-        <form action="" method="POST">
-
+        <!-- <form action="" method="POST">
             {% csrf_token %}
-
             <div>
                 <input type="text" placeholder="Product Name" name="name">
             </div>
@@ -36,19 +32,25 @@
             <div>
                 <input type="submit" value="Save">
             </div>
+        </form> -->
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{form}}
+            <div>
+                <input type="submit" value="Save">
+            </div>
         </form>
+
+
+        
     </div>
     <div class="list">
         <ul>
             {% for item in products %}
-
             <li>{{item.name}}</li>
-
             {% endfor %}
         </ul>
     </div>
 </div>
-
-
-
 {% endblock %}
