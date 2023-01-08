@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %} Products {% endblock %}
+
+{% block css %}
+<style>
+    div {
+        margin-bottom: 1rem;
+    }
+
+    input {
+        padding: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div style="display:flex;">
+    <div style="margin-right:6rem;">
+
+        <form action="" method="POST">
+
+            {% csrf_token %}
+
+            <div>
+                <input type="text" placeholder="Product Name" name="name">
+            </div>
+            <div>
+                <input type="number" placeholder="Product Quantity" name="quantity">
+
+            </div>
+            <div>
+                <input type="number" placeholder="Product Price" name="price">
+            </div>
+            <div>
+                <input type="submit" value="Save">
+            </div>
+        </form>
+    </div>
+    <div class="list">
+        <ul>
+            {% for item in products %}
+
+            <li>{{item.name}}</li>
+
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+
+{% endblock %}

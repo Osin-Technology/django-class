@@ -8,8 +8,19 @@
 
     <title>{% block title %} {% endblock %}</title>
 
-    {% block css %} {% endblock %}
 
+    <style>
+        .menu{
+            display: flex;
+            list-style: none;
+        }
+        .menu li{
+            margin-right: 1rem;
+        }
+    </style>
+
+    {% block css %} {% endblock %}
+ 
 
 </head>
 <body>
