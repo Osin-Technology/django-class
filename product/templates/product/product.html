@@ -38,19 +38,30 @@
             {% csrf_token %}
             {{form}}
             <div>
-                <input type="submit" value="Save">
+                <input type="submit" value="Save" name="post">
+            </div>
+
+            <div>
+                <input type="submit" value="Update" name="update">
             </div>
         </form>
 
 
-        
+
     </div>
     <div class="list">
         <ul>
             {% for item in products %}
             <li>
-                <span>{{item.name}}</span>    
+                <span>{{item.name}}</span>
                 <span><a href="products/delete/{{item.id}}">Delete</a></span>
+                <span>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{item.id}}">
+                        <input type="submit" value="update">
+                    </form>
+                </span>
             </li>
             {% endfor %}
         </ul>

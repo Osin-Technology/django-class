@@ -48,26 +48,49 @@ def products(request):
     template_path = 'product/product.html'
     context = {}
 
-    form = ProductCustomForm()
+    form = ProductForm()
     context["form"] = form
 
     products = Product.objects.all()
     context["products"] = products
 
     if request.method == "POST":
-        # create_products(request.POST)
-        form_data = ProductCustomForm(request.POST)
-        if form_data.is_valid():
-            print("validated")
-            
+        if 'post' in request.POST:
+            # create_products(request.POST)
+            form_data = ProductForm(request.POST)
+            if form_data.is_valid():
+                print("validated")
+                # approach 1
+                # Product.objects.create(**form_data.cleaned_data)
+                
+                # approach 2 for model forms
+                form_data.save()
+            else:
+                print("not validated")
 
-            # approach 1
-            Product.objects.create(**form_data.cleaned_data)
+        elif 'update' in request.POST:
+            name = request.POST["name"]
             
-            # approach 2 for model forms
-            # form_data.save()
+            # Product.objects.update(**data)
+            cur_product = Product.objects.get(name=name)
+            cur_product.name = request.POST["name"]
+            cur_product.price = request.POST["price"]
+            cur_product.quantity = request.POST["quantity"]
+            cur_product.save()
+            
         else:
-            print("not validated")
+            product_id = request.POST["product_id"]
+            data = Product.objects.get(id=product_id)
+            print(data)
+
+            # products = Product.objects.all()
+            # context["products"] = products
+
+            form = ProductForm(instance=data)
+            context["form"] = form
+
+            return render(request, template_path, context)
+
 
         return redirect('product')
 
