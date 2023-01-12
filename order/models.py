@@ -8,3 +8,4 @@ class Order(models.Model):
     address = models.CharField(max_length=99)
     product_name = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+

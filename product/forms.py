@@ -8,6 +8,8 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = "__all__"
 
+   
+
 
 class ProductCustomForm(forms.Form):
     name = forms.CharField()
